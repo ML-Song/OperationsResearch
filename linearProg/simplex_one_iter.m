@@ -1,18 +1,18 @@
 function [ simplexTable, posX, posY ] = simplex_one_iter(simplexTable)
-%å•çº¯å½¢æ³•è§£ç›®æ ‡å‡½æ•°æœ€å¤§å€¼ï¼Œè‹¥éœ€è¦æå°å€¼å¯ä»¤å•çº¯å½¢è¡¨ç¬¬ä¸€è¡Œå–è´Ÿ%
-%è¾“å…¥å•çº¯å½¢è¡¨ï¼Œè¾“å‡ºæ–°å•çº¯å½¢è¡¨ï¼Œä¸»åˆ—ï¼Œ ä¸»è¡Œ%
+%µ¥´¿ĞÎ·¨½âÄ¿±êº¯Êı×î´óÖµ%
+%ÊäÈëµ¥´¿ĞÎ±í£¬Êä³öĞÂµ¥´¿ĞÎ±í£¬Ö÷ÁĞ£¬ Ö÷ĞĞ%
 [row, ~] = size(simplexTable);
-[~, posX] = min(simplexTable(1, 1: end - 1));%è®¡ç®—ä¸»åˆ—ï¼Œä¸åŒ…æ‹¬è§£åˆ—
+[~, posX] = min(simplexTable(1, 1: end - 1));%¼ÆËãÖ÷ÁĞ£¬²»°üÀ¨½âÁĞ
 tmp = simplexTable(:, end) ./ simplexTable(:, posX);
-tmp(tmp < 0) = max(tmp) + 1;%è®¡ç®—æœ€å°æ­£å€¼
-[~, posY] = min(tmp(2:end));%è®¡ç®—ä¸»è¡Œï¼Œä¸åŒ…æ‹¬zè¡Œ
+tmp(tmp <= 0) = max(tmp) + 1;%¼ÆËã×îĞ¡ÕıÖµ
+[~, posY] = min(tmp(2:end));%¼ÆËãÖ÷ĞĞ£¬²»°üÀ¨zĞĞ
 posY = posY + 1;
 disp([posX, posY]);
-simplexTable(posY, :) = simplexTable(posY, :)/simplexTable(posY, posX);%ä¸»è¡Œï¼ä¸»å…ƒ
+simplexTable(posY, :) = simplexTable(posY, :)/simplexTable(posY, posX);%Ö÷ĞĞ£¯Ö÷Ôª
 for iRow = 1: row
     if iRow ~= posY
         simplexTable(iRow, :) = simplexTable(iRow, :) - simplexTable(posY, :) * simplexTable(iRow, posX);
-    end% iè¡Œ - ä¸»è¡Œ * iè¡Œåœ¨ä¸»åˆ—ç³»æ•°
+    end% iĞĞ - Ö÷ĞĞ * iĞĞÔÚÖ÷ÁĞÏµÊı
 end
 disp(simplexTable);
 end
